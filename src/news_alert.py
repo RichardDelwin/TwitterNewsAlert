@@ -1,9 +1,10 @@
 import tweepy
-from multiprocessing.pool import ThreadPool
+# from multiprocessing.pool import ThreadPool
 import sys
-import os 
+import os
 import src.StreamListener as StreamListener
 from src.StreamSettings import StreamSettings
+
 
 def authorize():
 
@@ -27,7 +28,6 @@ def authorize():
         sys.exit(1)
 
     return api
-
 
 
 def startNewsALert(filename, json=True, textFile=False):
@@ -55,20 +55,14 @@ def startNewsALert(filename, json=True, textFile=False):
 
     # res = api.verify_credentials()    -----------> Doesn't work!
 
-
-
-
     streamListener = StreamListener.StreamListener()
 
-    stream = tweepy.Stream(auth = api.auth, listener=streamListener)
+    stream = tweepy.Stream(auth=api.auth, listener=streamListener)
+    track_data = ["Chelsea AND F AND C", "Blues AND Chelsea",
+                  "UEFA AND Chelsea", "Goal Chelsea"]
 
-    a = stream.filter(track=['usa visa', 'indian students', '"f-1" OR "f1"', 'Canada visa', 'Canadian visa',
-                         'international students', '"h1-b" OR "h1 - b" OR "h1b"', 'Master OR MS OR MSc',
-                         "STEM", "Technology sector"],
-                   languages="en", is_async=True)
+    a = stream.filter(track=track_data, languages="en", is_async=True)
 
     input("Press any key to exit...")
 
     print(a)
-
-
